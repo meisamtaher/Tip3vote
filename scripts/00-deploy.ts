@@ -2,10 +2,10 @@ import BigNumber from "bignumber.js";
 import { Address, zeroAddress } from "locklift";
 
 const ROOT_OWNER_ADDRESS = "0:cf903ae7045c5553df013a1f48e8dabaddd39671da24cd695b3757cfd65c2bc4";
-const REMAINING_GAS_TO = "0:0000000000000000000000000000000000000000000000000000000000000000";
-const NAME = "First Venom Token";
-const SYMBOL = "FVT";
-const INITIAL_SUPPLY_TO = "0:0000000000000000000000000000000000000000000000000000000000000000";
+const REMAINING_GAS_TO = "0:cf903ae7045c5553df013a1f48e8dabaddd39671da24cd695b3757cfd65c2bc4";
+const NAME = "First Vote Token";
+const SYMBOL = "VOT";
+const INITIAL_SUPPLY_TO = "0:cf903ae7045c5553df013a1f48e8dabaddd39671da24cd695b3757cfd65c2bc4";
 const INITIAL_SUPPLY = "1000000000";
 const DECIMALS = 18;
 const DISABLE_MINT = false;
@@ -16,7 +16,7 @@ async function main() {
   console.log("Starting TIP3 contract deployment...");
 
   const signer = (await locklift.keystore.getSigner("0"))!;
-  const tokenWalletContract = locklift.factory.getContractArtifacts("TokenWallet");
+  const voteTokenWalletContract = locklift.factory.getContractArtifacts("VoteTokenWallet");
 
   const { contract: tokenRoot } = await locklift.factory.deployContract({
     contract: "TokenRoot",
@@ -26,7 +26,7 @@ async function main() {
       symbol_: SYMBOL,
       decimals_: DECIMALS,
       rootOwner_: new Address(ROOT_OWNER_ADDRESS),
-      walletCode_: tokenWalletContract.code,
+      walletCode_: voteTokenWalletContract.code,
       randomNonce_: locklift.utils.getRandomNonce(),
       deployer_: zeroAddress,
     },

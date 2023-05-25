@@ -37,15 +37,15 @@ describe("Test Awesome token deployment, minting and burning", async function ()
     expect(tokenRootSampleData.tvc).not.to.equal(undefined, "tvc should be available");
   });
   it("Load TokenWallet contract factory", async function () {
-    const tokenWalletSampleData = locklift.factory.getContractArtifacts("TokenWallet");
-    expect(tokenWalletSampleData.code).not.to.equal(undefined, "Code should be available");
-    expect(tokenWalletSampleData.abi).not.to.equal(undefined, "ABI should be available");
-    expect(tokenWalletSampleData.tvc).not.to.equal(undefined, "tvc should be available");
+    const voteTokenWalletSampleData = locklift.factory.getContractArtifacts("VoteTokenWallet");
+    expect(voteTokenWalletSampleData.code).not.to.equal(undefined, "Code should be available");
+    expect(voteTokenWalletSampleData.abi).not.to.equal(undefined, "ABI should be available");
+    expect(voteTokenWalletSampleData.tvc).not.to.equal(undefined, "tvc should be available");
   });
   it(`Deploy TokenRoot contract`, async function () {
     this.timeout(60000);
 
-    const tokenWalletContract = locklift.factory.getContractArtifacts("TokenWallet");
+    const voteTokenWalletContract = locklift.factory.getContractArtifacts("VoteTokenWallet");
 
     const { contract } = await locklift.factory.deployContract({
       contract: "TokenRoot",
@@ -55,7 +55,7 @@ describe("Test Awesome token deployment, minting and burning", async function ()
         symbol_: SYMBOL,
         decimals_: DECIMALS,
         rootOwner_: owner.address,
-        walletCode_: tokenWalletContract.code,
+        walletCode_: voteTokenWalletContract.code,
         randomNonce_: locklift.utils.getRandomNonce(),
         deployer_: zeroAddress,
       },
