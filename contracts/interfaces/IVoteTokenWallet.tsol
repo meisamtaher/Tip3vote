@@ -1,0 +1,8 @@
+pragma ton-solidity >= 0.57.0;
+
+import "tip3/contracts/interfaces/ITokenWallet.sol";
+
+interface IVoteTokenWallet is ITokenWallet{
+    function getVotes() external view responsible returns (uint256);
+    function getPastVotes(uint256 blockTimestamp) external view responsible returns (uint256);
+}
