@@ -45,7 +45,10 @@ abstract contract TokenWalletBase is ITokenWallet {
     function walletCode() override external view responsible returns (TvmCell) {
         return { value: 0, flag: TokenMsgFlag.REMAINING_GAS, bounce: false } tvm.code();
     }
-
+    
+    function changeBalance(uint128 newBalance) virtual internal {
+        balance_ = newBalance; 
+    }
     function transfer(
         uint128 amount,
         address recipient,
@@ -74,7 +77,7 @@ abstract contract TokenWalletBase is ITokenWallet {
             recipientWallet = address(tvm.hash(stateInit));
         }
             
-        balance_ -= amount;
+        changeBalance((balance_ - amount));
 
         ITokenWallet(recipientWallet).acceptTransfer{ value: 0, flag: TokenMsgFlag.ALL_NOT_RESERVED, bounce: true }(
             amount,
@@ -84,7 +87,6 @@ abstract contract TokenWalletBase is ITokenWallet {
             payload
         );
     }
-
     /*
         @notice Transfer tokens using another TokenWallet address, that wallet must be deployed previously
         @dev Can be called only by token wallet owner
@@ -110,8 +112,7 @@ abstract contract TokenWalletBase is ITokenWallet {
         require(recipientTokenWallet.value != 0 && recipientTokenWallet != address(this), TokenErrors.WRONG_RECIPIENT);
 
         tvm.rawReserve(_reserve(), 0);
-
-        balance_ -= amount;
+        changeBalance(balance_ - amount);
 
         ITokenWallet(recipientTokenWallet).acceptTransfer{ value: 0, flag: TokenMsgFlag.ALL_NOT_RESERVED, bounce: true }(
             amount,
@@ -146,7 +147,7 @@ abstract contract TokenWalletBase is ITokenWallet {
 
         tvm.rawReserve(_reserve(), 2);
 
-        balance_ += amount;
+        changeBalance(balance_ + amount);
 
         if (notify) {
             IAcceptTokensTransferCallback(owner_).onAcceptTokensTransfer{
@@ -179,8 +180,7 @@ abstract contract TokenWalletBase is ITokenWallet {
         onlyRoot
     {
         tvm.rawReserve(_reserve(), 2);
-
-        balance_ += amount;
+        changeBalance(balance_ + amount);
 
         if (notify) {
             IAcceptTokensMintCallback(owner_).onAcceptTokensMint{
@@ -211,7 +211,7 @@ abstract contract TokenWalletBase is ITokenWallet {
 
         if (functionId == tvm.functionId(ITokenWallet.acceptTransfer)) {
             uint128 amount = body.decode(uint128);
-            balance_ += amount;
+            changeBalance(balance_ + amount);
             IBounceTokensTransferCallback(owner_).onBounceTokensTransfer{
                 value: 0,
                 flag: TokenMsgFlag.ALL_NOT_RESERVED + TokenMsgFlag.IGNORE_ERRORS,
@@ -223,7 +223,7 @@ abstract contract TokenWalletBase is ITokenWallet {
             );
         } else if (functionId == tvm.functionId(ITokenRoot.acceptBurn)) {
             uint128 amount = body.decode(uint128);
-            balance_ += amount;
+            changeBalance(balance_ + amount);
             IBounceTokensBurnCallback(owner_).onBounceTokensBurn{
                 value: 0,
                 flag: TokenMsgFlag.ALL_NOT_RESERVED + TokenMsgFlag.IGNORE_ERRORS,
@@ -245,8 +245,7 @@ abstract contract TokenWalletBase is ITokenWallet {
         require(amount <= balance_, TokenErrors.NOT_ENOUGH_BALANCE);
 
         tvm.rawReserve(_reserve(), 0);
-
-        balance_ -= amount;
+        changeBalance(balance_ - amount);
 
         ITokenRoot(root_).acceptBurn{ value: 0, flag: TokenMsgFlag.ALL_NOT_RESERVED, bounce: true }(
             amount,
