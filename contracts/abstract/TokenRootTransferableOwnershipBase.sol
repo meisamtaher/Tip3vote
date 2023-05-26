@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 import "./TokenRootBase.sol";
-import "../interfaces/ITransferableOwnership.sol";
+import "tip3/contracts/interfaces/ITransferableOwnership.sol";
 
 
 abstract contract TokenRootTransferableOwnershipBase is TokenRootBase, ITransferableOwnership {

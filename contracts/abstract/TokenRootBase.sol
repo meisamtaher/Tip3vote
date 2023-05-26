@@ -3,13 +3,13 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../interfaces/ITransferTokenRootOwnershipCallback.sol";
-import "../interfaces/IAcceptTokensBurnCallback.sol";
-import "../interfaces/ITokenRoot.sol";
-import "../interfaces/ITokenWallet.sol";
-import "../structures/ICallbackParamsStructure.sol";
-import "../libraries/TokenErrors.sol";
-import "../libraries/TokenMsgFlag.sol";
+import "tip3/contracts/interfaces/ITransferTokenRootOwnershipCallback.sol";
+import "tip3/contracts/interfaces/IAcceptTokensBurnCallback.sol";
+import "tip3/contracts/interfaces/ITokenRoot.sol";
+import "tip3/contracts/interfaces/ITokenWallet.sol";
+import "tip3/contracts/structures/ICallbackParamsStructure.sol";
+import "tip3/contracts/libraries/TokenErrors.sol";
+import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
 /*
@@ -81,6 +81,7 @@ abstract contract TokenRootBase is ITokenRoot, ICallbackParamsStructure {
         @param walletOwner Token wallet owner address
         @param deployWalletValue
     */
+
     function deployWallet(address walletOwner, uint128 deployWalletValue)
         public
         override

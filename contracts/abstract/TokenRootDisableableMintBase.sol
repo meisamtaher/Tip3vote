@@ -4,9 +4,9 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 import "./TokenRootBase.sol";
-import "../interfaces/IDisableableMintTokenRoot.sol";
-import "../libraries/TokenErrors.sol";
-import "../libraries/TokenMsgFlag.sol";
+import "tip3/contracts/interfaces/IDisableableMintTokenRoot.sol";
+import "tip3/contracts/libraries/TokenErrors.sol";
+import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
 abstract contract TokenRootDisableableMintBase is TokenRootBase, IDisableableMintTokenRoot {

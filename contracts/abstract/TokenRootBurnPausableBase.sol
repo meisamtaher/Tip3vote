@@ -4,8 +4,8 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 import "./TokenRootBase.sol";
-import "../interfaces/IBurnPausableTokenRoot.sol";
-import "../libraries/TokenMsgFlag.sol";
+import "tip3/contracts/interfaces/IBurnPausableTokenRoot.sol";
+import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
 abstract contract TokenRootBurnPausableBase is TokenRootBase, IBurnPausableTokenRoot {

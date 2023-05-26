@@ -4,10 +4,10 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 import "./TokenRootBase.sol";
-import "../interfaces/IBurnableByRootTokenRoot.sol";
-import "../interfaces/IBurnableByRootTokenWallet.sol";
-import "../libraries/TokenErrors.sol";
-import "../libraries/TokenMsgFlag.sol";
+import "tip3/contracts/interfaces/IBurnableByRootTokenRoot.sol";
+import "tip3/contracts/interfaces/IBurnableByRootTokenWallet.sol";
+import "tip3/contracts/libraries/TokenErrors.sol";
+import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
 abstract contract TokenRootBurnableByRootBase is TokenRootBase, IBurnableByRootTokenRoot {
