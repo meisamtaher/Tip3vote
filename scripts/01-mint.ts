@@ -29,15 +29,15 @@ async function main() {
   ]);
   spinner.start(`Mint tokens...`);
   try {
-    const tokenRoot = locklift.factory.getDeployedContract("TokenRoot", new Address(answers.contractAddress));
+    const voteTokenRoot = locklift.factory.getDeployedContract("VoteTokenRoot", new Address(answers.contractAddress));
 
-    const { value0: decimals } = await tokenRoot.methods.decimals({ answerId: 0 }).call();
+    const { value0: decimals } = await voteTokenRoot.methods.decimals({ answerId: 0 }).call();
 
     const sender = await locklift.factory.accounts.addExistingAccount({
       publicKey: answers.tokensOwnerPublicKey,
       type: WalletTypes.WalletV3,
     });
-    const tx = await tokenRoot.methods
+    const tx = await voteTokenRoot.methods
       .mint({
         amount: new BigNumber(answers.mintAmount).shiftedBy(Number(decimals)).toFixed(),
         recipient: new Address(answers.tokensOwnerAddress),

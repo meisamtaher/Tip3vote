@@ -15,7 +15,7 @@ const DISABLE_MINT = false;
 const DISABLE_BURN_BY_ROOT = false;
 const PAUSE_BURN = false;
 
-let tokenRoot: Contract<FactorySource["TokenRoot"]>;
+let voteTokenRoot: Contract<FactorySource["VoteTokenRoot"]>;
 let owner: Account;
 let ownerKeys: nt.Ed25519KeyPair;
 
@@ -30,11 +30,11 @@ describe("Test Awesome token deployment, minting and burning", async function ()
     });
     owner = account;
   });
-  it("Load TokenRoot contract factory", async function () {
-    const tokenRootSampleData = locklift.factory.getContractArtifacts("TokenRoot");
-    expect(tokenRootSampleData.code).not.to.equal(undefined, "Code should be available");
-    expect(tokenRootSampleData.abi).not.to.equal(undefined, "ABI should be available");
-    expect(tokenRootSampleData.tvc).not.to.equal(undefined, "tvc should be available");
+  it("Load voteTokenRoot contract factory", async function () {
+    const voteTokenRootSampleData = locklift.factory.getContractArtifacts("VoteTokenRoot");
+    expect(voteTokenRootSampleData.code).not.to.equal(undefined, "Code should be available");
+    expect(voteTokenRootSampleData.abi).not.to.equal(undefined, "ABI should be available");
+    expect(voteTokenRootSampleData.tvc).not.to.equal(undefined, "tvc should be available");
   });
   it("Load TokenWallet contract factory", async function () {
     const voteTokenWalletSampleData = locklift.factory.getContractArtifacts("VoteTokenWallet");
@@ -42,13 +42,13 @@ describe("Test Awesome token deployment, minting and burning", async function ()
     expect(voteTokenWalletSampleData.abi).not.to.equal(undefined, "ABI should be available");
     expect(voteTokenWalletSampleData.tvc).not.to.equal(undefined, "tvc should be available");
   });
-  it(`Deploy TokenRoot contract`, async function () {
+  it(`Deploy voteTokenRoot contract`, async function () {
     this.timeout(60000);
 
     const voteTokenWalletContract = locklift.factory.getContractArtifacts("VoteTokenWallet");
 
     const { contract } = await locklift.factory.deployContract({
-      contract: "TokenRoot",
+      contract: "VoteTokenRoot",
       publicKey: ownerKeys.publicKey,
       initParams: {
         name_: NAME,
@@ -71,14 +71,14 @@ describe("Test Awesome token deployment, minting and burning", async function ()
       value: locklift.utils.toNano(2),
     });
 
-    tokenRoot = contract;
-    const { value0: balance } = await tokenRoot.methods.totalSupply({ answerId: 0 }).call();
+    voteTokenRoot = contract;
+    const { value0: balance } = await voteTokenRoot.methods.totalSupply({ answerId: 0 }).call();
 
     expect(Number(balance)).equal(INITIAL_SUPPLY, "Contract total supply should be the same as initial supply");
   });
   it("Mint tokens", async function () {
     this.timeout(30000);
-    await tokenRoot.methods
+    await voteTokenRoot.methods
       .mint({
         amount: ADDITIONAL_MINT,
         recipient: owner.address,
@@ -91,7 +91,7 @@ describe("Test Awesome token deployment, minting and burning", async function ()
         from: owner.address,
         amount: locklift.utils.toNano(2),
       });
-    const { value0: balance } = await tokenRoot.methods.totalSupply({ answerId: 0 }).call();
+    const { value0: balance } = await voteTokenRoot.methods.totalSupply({ answerId: 0 }).call();
 
     expect(Number(balance)).equal(
       INITIAL_SUPPLY + ADDITIONAL_MINT,
@@ -100,7 +100,7 @@ describe("Test Awesome token deployment, minting and burning", async function ()
   });
   it("Burn tokens", async function () {
     this.timeout(30000);
-    await tokenRoot.methods
+    await voteTokenRoot.methods
       .burnTokens({
         amount: BURN_AMOUNT,
         walletOwner: owner.address,
@@ -112,7 +112,7 @@ describe("Test Awesome token deployment, minting and burning", async function ()
         from: owner.address,
         amount: locklift.utils.toNano(2),
       });
-    const { value0: balance } = await tokenRoot.methods.totalSupply({ answerId: 0 }).call();
+    const { value0: balance } = await voteTokenRoot.methods.totalSupply({ answerId: 0 }).call();
 
     expect(Number(balance)).equal(
       INITIAL_SUPPLY + ADDITIONAL_MINT - BURN_AMOUNT,
@@ -120,7 +120,7 @@ describe("Test Awesome token deployment, minting and burning", async function ()
     );
   });
   this.afterAll(function () {
-    console.log(`  tokenRoot address: ${tokenRoot.address.toString()}`);
+    console.log(`  voteTokenRoot address: ${voteTokenRoot.address.toString()}`);
     console.log(`  owner address: ${owner.address.toString()}`);
     console.log(`  owner public key: ${ownerKeys.publicKey}`);
     console.log(`  owner private key: ${ownerKeys.secretKey}`);

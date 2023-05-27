@@ -3,11 +3,11 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./TokenRootBase.sol";
+import "./VoteTokenRootBase.tsol";
 import "tip3/contracts/interfaces/ITransferableOwnership.sol";
 
 
-abstract contract TokenRootTransferableOwnershipBase is TokenRootBase, ITransferableOwnership {
+abstract contract VoteTokenRootTransferableOwnershipBase is VoteTokenRootBase, ITransferableOwnership {
 
     function transferOwnership(
         address newOwner,

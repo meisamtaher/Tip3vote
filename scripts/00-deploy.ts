@@ -18,8 +18,8 @@ async function main() {
   const signer = (await locklift.keystore.getSigner("0"))!;
   const voteTokenWalletContract = locklift.factory.getContractArtifacts("VoteTokenWallet");
 
-  const { contract: tokenRoot } = await locklift.factory.deployContract({
-    contract: "TokenRoot",
+  const { contract: voteTokenRoot } = await locklift.factory.deployContract({
+    contract: "VoteTokenRoot",
     publicKey: signer.publicKey,
     initParams: {
       name_: NAME,
@@ -42,7 +42,7 @@ async function main() {
     value: locklift.utils.toNano(4),
   });
 
-  console.log(`TIP3 contract deployed at: ${tokenRoot.address.toString()}`);
+  console.log(`TIP3 contract deployed at: ${voteTokenRoot.address.toString()}`);
 }
 
 main()

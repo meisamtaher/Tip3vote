@@ -156,8 +156,9 @@ abstract contract TokenRootBase is ITokenRoot, ICallbackParamsStructure {
 
         tvm.rawReserve(address(this).balance - msg.value, 2);
 
-        totalSupply_ -= amount;
-
+        //totalSupply_ -= amount;
+        _changeTotalSupply( totalSupply_ - amount);
+        
         if (callbackTo.value == 0) {
             remainingGasTo.transfer({
                 value: 0,
@@ -202,7 +203,8 @@ abstract contract TokenRootBase is ITokenRoot, ICallbackParamsStructure {
             recipientWallet = address(tvm.hash(stateInit));
         }
 
-        totalSupply_ += amount;
+        //totalSupply_ += amount;
+        _changeTotalSupply( totalSupply_ + amount);
 
         ITokenWallet(recipientWallet).acceptMint{ value: 0, flag: TokenMsgFlag.ALL_NOT_RESERVED, bounce: true }(
             amount,
@@ -227,7 +229,8 @@ abstract contract TokenRootBase is ITokenRoot, ICallbackParamsStructure {
     */
     onBounce(TvmSlice slice) external {
         if (slice.decode(uint32) == tvm.functionId(ITokenWallet.acceptMint)) {
-            totalSupply_ -= slice.decode(uint128);
+            //totalSupply_ -= slice.decode(uint128);
+            _changeTotalSupply( totalSupply_ - slice.decode(uint128));
         }
     }
 
@@ -247,6 +250,10 @@ abstract contract TokenRootBase is ITokenRoot, ICallbackParamsStructure {
 
     function _reserve() internal pure returns (uint128) {
         return math.max(address(this).balance - msg.value, _targetBalance());
+    }
+
+    function _changeTotalSupply(uint128 newTotalSupply)virtual internal {
+        totalSupply_ = newTotalSupply;
     }
 
     function _targetBalance() virtual internal pure returns (uint128);

@@ -3,14 +3,14 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./TokenRootBase.sol";
+import "./VoteTokenRootBase.tsol";
 import "tip3/contracts/interfaces/IBurnableByRootTokenRoot.sol";
 import "tip3/contracts/interfaces/IBurnableByRootTokenWallet.sol";
 import "tip3/contracts/libraries/TokenErrors.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
-abstract contract TokenRootBurnableByRootBase is TokenRootBase, IBurnableByRootTokenRoot {
+abstract contract VoteTokenRootBurnableByRootBase is VoteTokenRootBase, IBurnableByRootTokenRoot {
 
     bool burnByRootDisabled_;
 

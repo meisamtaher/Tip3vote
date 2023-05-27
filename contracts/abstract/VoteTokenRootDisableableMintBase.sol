@@ -3,13 +3,13 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./TokenRootBase.sol";
+import "./VoteTokenRootBase.tsol";
 import "tip3/contracts/interfaces/IDisableableMintTokenRoot.sol";
 import "tip3/contracts/libraries/TokenErrors.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
-abstract contract TokenRootDisableableMintBase is TokenRootBase, IDisableableMintTokenRoot {
+abstract contract VoteTokenRootDisableableMintBase is VoteTokenRootBase, IDisableableMintTokenRoot {
 
     bool mintDisabled_;
 
