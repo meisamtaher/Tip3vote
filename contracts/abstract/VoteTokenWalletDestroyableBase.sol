@@ -3,14 +3,14 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./TokenWalletBase.sol";
+import "./VoteTokenWalletBase.tsol";
 import "tip3/contracts/interfaces/ITokenRoot.sol";
 import "tip3/contracts/interfaces/IDestroyable.sol";
 import "tip3/contracts/libraries/TokenErrors.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
-abstract contract TokenWalletDestroyableBase is TokenWalletBase, IDestroyable {
+abstract contract TokenWalletDestroyableBase is VoteTokenWalletBase, IDestroyable {
 
     function destroy(address remainingGasTo) override external onlyOwner {
         require(balance_ == 0, TokenErrors.NON_EMPTY_BALANCE);

@@ -3,14 +3,14 @@ pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./TokenWalletBase.sol";
+import "./VoteTokenWalletBase.tsol";
 import "tip3/contracts/interfaces/ITokenRoot.sol";
 import "tip3/contracts/interfaces/IBurnableTokenWallet.sol";
 import "tip3/contracts/libraries/TokenErrors.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
 
 
-abstract contract TokenWalletBurnableBase is TokenWalletBase, IBurnableTokenWallet {
+abstract contract TokenWalletBurnableBase is VoteTokenWalletBase, IBurnableTokenWallet {
 
     /*
         @notice Burn tokens

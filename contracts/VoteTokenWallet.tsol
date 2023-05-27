@@ -5,9 +5,9 @@ import "tip3/contracts/libraries/TokenGas.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
 import "tip3/contracts/interfaces/IVersioned.sol";
 
-import "./abstract/TokenWalletBurnableByRootBase.sol";
-import "./abstract/TokenWalletBurnableBase.sol";
-import "./abstract/TokenWalletDestroyableBase.sol";
+import "./abstract/VoteTokenWalletBurnableByRootBase.sol";
+import "./abstract/VoteTokenWalletBurnableBase.sol";
+import "./abstract/VoteTokenWalletDestroyableBase.sol";
 import "./abstract/VoteTokenWalletBase.tsol";
 
 import "./structures/ICheckPointStructure.tsol";
