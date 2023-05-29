@@ -18,7 +18,7 @@ abstract contract VoteTokenRootBase is TokenRootBase,
     /**
      * @dev Gets the current votes balance of this wallet
      */
-    function getTotalVotes() override public view responsible returns (uint256) {
+    function getTotalSupply() override public view responsible returns (uint256) {
         uint256 pos = _checkpoints.length;
         return {value: 0, bounce: false, flag: 64} pos == 0 ? 0 : _checkpoints[pos - 1].votes;
     }
@@ -30,7 +30,7 @@ abstract contract VoteTokenRootBase is TokenRootBase,
      *
      * - `blockNumber` must have been already mined
      */
-    function getPastTotalVotes(uint256 blockTimestamp) override public view responsible returns (uint256) {
+    function getPastTotalSupply(uint256 blockTimestamp) override public view responsible returns (uint256) {
         require(blockTimestamp < block.timestamp, 1002);// "TIP3Votes: block not yet mined"
         return {value: 0, bounce: false, flag: 64} _checkpointsLookup(_checkpoints,blockTimestamp);
     }
