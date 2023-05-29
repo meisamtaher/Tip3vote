@@ -8,17 +8,19 @@ import "tip3/contracts/interfaces/IVersioned.sol";
 import "./TokenWalletBase.sol";
 
 import "../structures/ICheckPointStructure.tsol";
+import "../interfaces/IVoteTokenWallet.tsol";
 
 abstract contract VoteTokenWalletBase is TokenWalletBase,
-    ICheckPointStructure{
+    ICheckPointStructure,
+    IVoteTokenWallet{
 
     Checkpoint[] private _checkpoints;
     /**
      * @dev Gets the current votes balance of this wallet
      */
-    function getVotes() public view returns (uint256) {
+    function getVotes() override public view responsible returns (uint256) {
         uint256 pos = _checkpoints.length;
-        return pos == 0 ? 0 : _checkpoints[pos - 1].votes;
+        return {value: 0, bounce: false, flag: 64} pos == 0 ? 0 : _checkpoints[pos - 1].votes;
     }
 
     /**
@@ -28,9 +30,9 @@ abstract contract VoteTokenWalletBase is TokenWalletBase,
      *
      * - `blockNumber` must have been already mined
      */
-    function getPastVotes(uint256 blockTimestamp) public view returns (uint256) {
+    function getPastVotes(uint256 blockTimestamp) override public view responsible returns (uint256) {
         require(blockTimestamp < block.timestamp, 1002);// "TIP3Votes: block not yet mined"
-        return _checkpointsLookup(_checkpoints,blockTimestamp);
+        return {value: 0, bounce: false, flag: 64} _checkpointsLookup(_checkpoints,blockTimestamp);
     }
     /**
      * @dev Lookup a value in a list of (sorted) checkpoints.

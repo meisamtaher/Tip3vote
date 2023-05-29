@@ -11,7 +11,7 @@ import "./abstract/VoteTokenRootDisableableMintBase.sol";
 import "./VoteTokenWallet.tsol";
 import "tip3/contracts/libraries/TokenErrors.sol";
 import "tip3/contracts/libraries/TokenMsgFlag.sol";
-
+import "./interfaces/IVoteTokenRoot.tsol";
 
 /*
     @title Fungible token root contract

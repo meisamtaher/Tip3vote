@@ -1,0 +1,8 @@
+pragma ton-solidity >= 0.57.0;
+
+import "tip3/contracts/interfaces/ITokenRoot.sol";
+
+interface IVoteTokenRoot is ITokenRoot{
+    function getTotalVotes() external view responsible returns (uint256);
+    function getPastTotalVotes(uint256 blockTimestamp) external view responsible returns (uint256);
+}
