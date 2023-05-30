@@ -16,13 +16,12 @@ abstract contract VoteTokenWalletBase is TokenWalletBase,
 
     Checkpoint[] private _checkpoints;
     /**
-     * @dev Gets the current votes balance of this wallet
+     * @dev Gets the current votes balance of this wallet and a tvmcell var enters and get out 
      */
-    function getVotes() override public view responsible returns (uint256) {
+    function getVotes(TvmCell _payload) public override view responsible returns(uint256, TvmCell){
         uint256 pos = _checkpoints.length;
-        return {value: 0, bounce: false, flag: 64} pos == 0 ? 0 : _checkpoints[pos - 1].votes;
+        return {value: 0, bounce: false, flag: 64} (pos == 0 ? 0 : _checkpoints[pos - 1].votes, _payload);
     }
-
     /**
      * @dev Retrieve the number of votes for this wallet at the end of `blockNumber`.
      *
@@ -30,9 +29,9 @@ abstract contract VoteTokenWalletBase is TokenWalletBase,
      *
      * - `blockNumber` must have been already mined
      */
-    function getPastVotes(uint256 blockTimestamp) override public view responsible returns (uint256) {
+    function getPastVotes(uint256 blockTimestamp, TvmCell _payload) override public view responsible returns (uint256, TvmCell) {
         require(blockTimestamp < block.timestamp, 1002);// "TIP3Votes: block not yet mined"
-        return {value: 0, bounce: false, flag: 64} _checkpointsLookup(_checkpoints,blockTimestamp);
+        return {value: 0, bounce: false, flag: 64} (_checkpointsLookup(_checkpoints,blockTimestamp), _payload);
     }
     /**
      * @dev Lookup a value in a list of (sorted) checkpoints.

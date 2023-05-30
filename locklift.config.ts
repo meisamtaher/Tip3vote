@@ -1,20 +1,28 @@
 import { LockliftConfig } from "locklift";
 import { FactorySource } from "./build/factorySource";
-import { useEnv } from './utils/env'
+import { useEnv } from "./utils/env";
 
 declare global {
   const locklift: import("locklift").Locklift<FactorySource>;
 }
 
-const LOCAL_NETWORK_ENDPOINT = process.env.NETWORK_ENDPOINT || "http://localhost/graphql";
-const DEV_NET_NETWORK_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT || "https://devnet-sandbox.evercloud.dev/graphql";
+const LOCAL_NETWORK_ENDPOINT =
+  process.env.NETWORK_ENDPOINT || "http://localhost/graphql";
+const DEV_NET_NETWORK_ENDPOINT =
+  process.env.DEV_NET_NETWORK_ENDPOINT ||
+  "https://devnet-sandbox.evercloud.dev/graphql";
 
-const VENOM_TESTNET_ENDPOINT = process.env.VENOM_TESTNET_ENDPOINT || "https://jrpc-testnet.venom.foundation/rpc";
+const VENOM_TESTNET_ENDPOINT =
+  process.env.VENOM_TESTNET_ENDPOINT ||
+  "https://jrpc-testnet.venom.foundation/rpc";
 const VENOM_TESTNET_TRACE_ENDPOINT =
-  process.env.VENOM_TESTNET_TRACE_ENDPOINT || "https://gql-devnet.venom.network/graphql";
+  process.env.VENOM_TESTNET_TRACE_ENDPOINT ||
+  "https://gql-devnet.venom.network/graphql";
 
 // Create your own link on https://dashboard.evercloud.dev/
-const MAIN_NET_NETWORK_ENDPOINT = process.env.MAIN_NET_NETWORK_ENDPOINT || "https://mainnet.evercloud.dev/XXX/graphql";
+const MAIN_NET_NETWORK_ENDPOINT =
+  process.env.MAIN_NET_NETWORK_ENDPOINT ||
+  "https://mainnet.evercloud.dev/XXX/graphql";
 
 const config: LockliftConfig = {
   compiler: {
@@ -27,7 +35,7 @@ const config: LockliftConfig = {
     // Specify config for extarnal contracts as in exapmple
     externalContracts: {
       "node_modules/tip3/build": ["TokenRoot", "TokenWallet"],
-    }
+    },
   },
   linker: {
     // Specify path to your stdlib
@@ -54,7 +62,8 @@ const config: LockliftConfig = {
       // This giver is default local-node giverV2
       giver: {
         // Check if you need provide custom giver
-        address: "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415",
+        address:
+          "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415",
         key: "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3",
       },
       tracing: {
@@ -79,7 +88,8 @@ const config: LockliftConfig = {
         },
       },
       giver: {
-        address: "0:0000000000000000000000000000000000000000000000000000000000000000",
+        address:
+          "0:0000000000000000000000000000000000000000000000000000000000000000",
         key: "secret key",
       },
       tracing: {
@@ -89,7 +99,7 @@ const config: LockliftConfig = {
         // Use everdev to generate your phrase
         // !!! Never commit it in your repos !!!
         // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
-        phrase: useEnv("PHRASE"),
+        // phrase: useEnv("PHRASE"),
         amount: 20,
       },
     },
@@ -113,7 +123,7 @@ const config: LockliftConfig = {
       keys: {
         // Use everdev to generate your phrase
         // !!! Never commit it in your repos !!!
-        phrase: useEnv("PHRASE"),
+        // phrase: useEnv("PHRASE"),
         amount: 20,
       },
     },
@@ -131,7 +141,8 @@ const config: LockliftConfig = {
       },
       // This giver is default Wallet
       giver: {
-        address: "0:0000000000000000000000000000000000000000000000000000000000000000",
+        address:
+          "0:0000000000000000000000000000000000000000000000000000000000000000",
         key: "secret key",
       },
       tracing: {
